@@ -1,8 +1,7 @@
 #![allow(dead_code)]
 
-
 #[derive(Debug, PartialEq)]
-pub enum Type{
+pub enum Type {
     Post,
     Reel,
 }
@@ -17,22 +16,19 @@ pub struct Post {
     pub hashtags: Vec<String>,
 }
 
-
-
 pub fn read_url(url: &str) -> Option<(Type, String)> {
     let path = url.strip_prefix("https://www.instagram.com/")?;
-    let mut parts = path.split('/'); 
+    let mut parts = path.split('/');
 
     let post_type = match parts.next()? {
         "reel" => Type::Reel,
         "p" => Type::Post,
         _ => return None,
-    }; 
+    };
 
-   let shortcode = parts.next().filter(|code| !code.is_empty())?;
+    let shortcode = parts.next().filter(|code| !code.is_empty())?;
     Some((post_type, shortcode.to_string()))
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -52,7 +48,10 @@ mod tests {
 
     #[test]
     fn other_instagram_pages_are_not_posts() {
-        assert_eq!(read_url("https://www.instagram.com/stories/someone/1/"), None);
+        assert_eq!(
+            read_url("https://www.instagram.com/stories/someone/1/"),
+            None
+        );
     }
 
     #[test]
