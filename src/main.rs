@@ -2,6 +2,7 @@ pub mod cli;
 pub mod config;
 pub mod path;
 pub mod post;
+pub mod read;
 
 use anyhow::Result;
 use clap::Parser;
